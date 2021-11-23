@@ -31,6 +31,7 @@ function(gflagsMain)
 
     set(sources
         "${CMAKE_CURRENT_SOURCE_DIR}/flags.cc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/flagalias.cc"
         "${library_root}/src/gflags.cc"
         "${library_root}/src/gflags_reporting.cc"
         "${library_root}/src/gflags_completions.cc"
@@ -85,7 +86,7 @@ function(gflagsMain)
 
         SYSTEM INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/generated"
-        "${CMAKE_CURRENT_SOURCE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/"
         )
 
     target_link_libraries(thirdparty_gflags PRIVATE

@@ -145,13 +145,13 @@ private:
  *   as "options".
  * @param hidden(h) Boolean, true if this is hidden from help displays.
  */
-#define _FLAG(t, n, v, d, s, e, c, h)                                                                                  \
-    DEFINE_##t(n, v, d);                                                                                               \
-    namespace gflags {                                                                                                 \
-    namespace ext {                                                                                                    \
-    const int flag_##n = Flag::create(#n, {d, s, e, c, h});                                                            \
-    }                                                                                                                  \
-    }
+#define _FLAG(t, n, v, d, s, e, c, h)                                          \
+  DEFINE_##t(n, v, d);                                                         \
+  namespace gflags {                                                           \
+  namespace ext {                                                              \
+  const int flag_##n = Flag::create(#n, {d, s, e, c, h});                      \
+  }                                                                            \
+  }
 
 /*
  * @brief Create a command line flag and configuration option.
