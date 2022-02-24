@@ -117,6 +117,15 @@ public:
      */
     static void printFlags(bool shell = false, bool external = false, bool cli = false);
 
+    /**
+     * @brief dumpDefaultFlags dump the default flags config to file
+     * @param of osftream
+     * @param shell only dump shell flags,
+     * @param external only dump external flags(from extensions)
+     * @param cli only cli flags.
+     */
+    static void dumpDefaultFlags(std::ofstream& of, bool shell = false, bool external = false, bool cli = false);
+
 private:
     /// The container of all shell, CLI, and normal flags.
     std::map<std::string, FlagDetail> flags_;

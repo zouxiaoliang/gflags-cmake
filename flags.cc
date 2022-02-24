@@ -1,6 +1,7 @@
 #include "flags.h"
 
 #include "flagalias.h"
+#include <fstream>
 
 namespace flags = GFLAGS_NAMESPACE;
 
@@ -175,6 +176,41 @@ void Flag::printFlags(bool shell, bool external, bool cli) {
             fprintf(stdout, "%s", std::string(pad, ' ').c_str());
         }
         fprintf(stdout, "  %s\n", getDescription(flag.second->name).c_str());
+    }
+}
+
+void Flag::dumpDefaultFlags(std::ofstream& of, bool shell, bool external, bool cli) {
+    // open file.
+    std::vector<flags::CommandLineFlagInfo> info;
+    flags::GetAllFlags(&info);
+    auto& details = instance().flags_;
+
+    std::map<std::string, const flags::CommandLineFlagInfo*> ordered_info;
+    for (const auto& flag : info) {
+        ordered_info[flag.name] = &flag;
+    }
+
+    auto& aliases = instance().aliases_;
+    for (const auto& flag : ordered_info) {
+        if (details.count(flag.second->name) > 0) {
+            const auto& detail = details.at(flag.second->name);
+            if ((shell && !detail.shell) || (!shell && detail.shell) || (external && !detail.external) || (!external && detail.external) || (cli && !detail.cli) || (!cli && detail.cli) ||
+                detail.hidden) {
+                continue;
+            }
+        } else if (aliases.count(flag.second->name) > 0) {
+            const auto& alias = aliases.at(flag.second->name);
+            // Aliases are only printed if this is an external tool and the alias
+            // is external.
+            if (!alias.external || !external) {
+                continue;
+            }
+        } else {
+            // This flag was not defined as an osquery flag or flag alias.
+            continue;
+        }
+
+        of << flag.second->name << "=" << flag.second->default_value << std::endl;
     }
 }
 
