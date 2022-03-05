@@ -79,7 +79,7 @@ private:
 /**
  * @brief Create an alias to a command line flag.
  *
- * Like OSQUERY_FLAG, do not use this in the osquery codebase. Use the derived
+ * Like FLAG, do not use this in the osquery codebase. Use the derived
  * macros that abstract the tail of boolean arguments.
  */
 #define _FLAG_ALIAS(t, a, n, s, e)                                                                                     \
