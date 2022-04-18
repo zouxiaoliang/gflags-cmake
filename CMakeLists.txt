@@ -79,6 +79,7 @@ function(gflagsMain)
         GFLAGS_IS_A_DLL=0
         GFLAGS_DLL_DECLARE_FLAG=
         GFLAGS_DLL_DEFINE_FLAG=
+        NDEBUG
         )
 
     target_include_directories(thirdparty_gflags
